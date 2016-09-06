@@ -1,5 +1,5 @@
 # CollisionProbability
-Fortran 90 implementation of six methods for calculating Collision probability between two bodies in the short-term encounter scenario.
+Fortran 90 implementation of five methods for calculating Collision probability between two bodies in the short-term encounter scenario.
 
 
 Files:
