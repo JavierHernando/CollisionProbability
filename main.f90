@@ -4,6 +4,7 @@
 
 program test
 
+    use kind_constants
 
     use CollisionProbability_GPHA
     use CollisionProbability_Serra
@@ -15,14 +16,14 @@ program test
 
 implicit none
 
-    real(kind=8) :: sigmax, sigmay, x0, y0, R
-    real(kind=8) :: PGPHA, PSerra, PChan, PAlfano, PFoster
+    real(dp) :: sigmax, sigmay, x0, y0, R
+    real(dp) :: PGPHA, PSerra, PChan, PAlfano, PFoster
 
-    R = 1
-    sigmax = 100
-    sigmay = 20
-    x0 = 50
-    y0 = 10
+    R = 1.0_dp
+    sigmax = 100_dp
+    sigmay = 20_dp
+    x0 = 50_dp
+    y0 = 10_dp
 
     PGPHA = GPHA(x0, y0, sigmax, sigmay, R, 10) 
     PSerra = Serra(x0, y0, sigmax, sigmay, R, 10) 

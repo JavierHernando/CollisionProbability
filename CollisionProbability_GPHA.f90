@@ -14,9 +14,9 @@
 !
 
 module CollisionProbability_GPHA
+    use kind_constants
     implicit none
 
-    real(kind=8), parameter :: PI = 4D0 * atan(1D0)
 
     interface
         function factorial(n)
@@ -33,18 +33,18 @@ module CollisionProbability_GPHA
     function GPHA(x0, y0, a, b, R, imax) result (P)
         implicit none
       
-        real(kind=8), intent(in) :: x0, y0, a, b, R
+        real(dp), intent(in) :: x0, y0, a, b, R
         integer, intent(in) :: imax
-        real(kind=8) :: P
+        real(dp) :: P
         integer :: i, j
-        real(kind=8) :: auxSum, AR, R2a
-        real(kind=8), dimension(2*imax+1) :: HermiteX, HermiteY
+        real(dp) :: auxSum, AR, R2a
+        real(dp), dimension(2*imax+1) :: HermiteX, HermiteY
 
         !Hermite Polynomials
         !H_i is stored in the i+1 memory position of the array
-        HermiteX(1) = 1         !H0(x) = 1
+        HermiteX(1) = 1.0_dp    !H0(x) = 1
         HermiteX(2) = x0 / a    !H1(x) = x
-        HermiteY(1) = 1         !H0(x) = 1
+        HermiteY(1) = 1.0_dp    !H0(x) = 1
         HermiteY(2) = y0 / b    !H1(x) = x
         do i = 2, 2*imax
             HermiteX(i+1) = (x0/a) * HermiteX(i) - (i-1) * HermiteX(i-1)
@@ -53,7 +53,7 @@ module CollisionProbability_GPHA
 
         !Double summation
         AR = a/b
-        R2a = R/2D0/a 
+        R2a = R/2.0_dp/a 
         P = 0
         do i = 0, imax
             auxSum = 0
@@ -65,7 +65,7 @@ module CollisionProbability_GPHA
         end do
 
         ! Constant term left outside the double summation
-        P = P * exp(-((x0/a)**2 + (y0/b)**2)/2D0) * (R / a) * (R / b) / 2D0
+        P = P * exp(-((x0/a)**2 + (y0/b)**2)/2.0_dp) * (R / a) * (R / b) / 2.0_dp
     end function GPHA
 
 

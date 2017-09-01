@@ -4,5 +4,6 @@ module kind_constants
 
     integer, parameter  :: dp=kind(0.d0)
     real(dp), parameter :: infty = huge(1.0_dp)
+    real(dp), parameter :: PI = 4.0_dp * atan(1.0_dp)
 
 end module kind_constants

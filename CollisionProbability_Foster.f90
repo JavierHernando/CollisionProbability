@@ -13,9 +13,9 @@
 !
 
 module CollisionProbability_Foster
+    use kind_constants
     implicit none
 
-    real(kind=8), parameter :: PI = 4D0 * atan(1D0)
 
     contains
 
@@ -26,9 +26,9 @@ module CollisionProbability_Foster
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     function Foster (x0, y0, sigmax, sigmay, R) result (P)
         implicit none
-        real(kind=8), intent(in) :: x0, y0, sigmax, sigmay, R
-        real(kind=8) :: P
-        real(kind=8) :: xe, phi
+        real(dp), intent(in) :: x0, y0, sigmax, sigmay, R
+        real(dp) :: P
+        real(dp) :: xe, phi
 
         xe = sqrt( x0**2 + y0**2 )
         phi = atan2(x0, y0)
@@ -39,8 +39,8 @@ module CollisionProbability_Foster
     
     function FosterAngleDist (xe, phi, sigmax, sigmay, R) result (P)
         implicit none
-        real(kind=8), intent(in) :: xe, phi, sigmax, sigmay, R
-        real(kind=8) :: P, theta, dTheta, rho, dR, sinPhi, cosPhi, sinTheta, cosTheta
+        real(dp), intent(in) :: xe, phi, sigmax, sigmay, R
+        real(dp) :: P, theta, dTheta, rho, dR, sinPhi, cosPhi, sinTheta, cosTheta
 
         integer :: nR, nTheta, iR, iTheta 
 
@@ -49,22 +49,22 @@ module CollisionProbability_Foster
         !Foster sets dr = R/12, this means 13 points in r
         nR = 13;
 
-        dR = R / (nR - 1);
-        dTheta = 2 * PI / nTheta
+        dR = R / (nR - 1.0_dp);
+        dTheta = 2.0_dp * PI / nTheta
         sinPhi = sin(phi)
         cosPhi = cos(phi)
 
-        P = 0D0
-        theta = 0D0
+        P = 0.0_dp
+        theta = 0.0_dp
         do iTheta = 1, nTheta
             sinTheta = sin(theta)
             cosTheta = cos(theta)
-            rho = 0D0
+            rho = 0.0_dp
             do iR = 1, nR
                 if (iR == 1 .or. iR == nR) then
-                     P = P + rho * exp( -xe**2/2*( ( sinPhi/sigmax )**2 + ( cosPhi/sigmay )**2 ) ) * exp( -rho**2/2D0*( ( sinTheta/sigmax )**2 + ( cosTheta/sigmay )**2 ) +  rho*xe*( ( sinTheta*sinPhi )/sigmax**2 + ( cosTheta*cosPhi )/sigmay**2 ) )   / ( 2D0 * PI * sigmax * sigmay ) / 2D0
+                     P = P + rho * exp( -xe**2/2*( ( sinPhi/sigmax )**2 + ( cosPhi/sigmay )**2 ) ) * exp( -rho**2/2.0_dp*( ( sinTheta/sigmax )**2 + ( cosTheta/sigmay )**2 ) +  rho*xe*( ( sinTheta*sinPhi )/sigmax**2 + ( cosTheta*cosPhi )/sigmay**2 ) )   / ( 2.0_dp * PI * sigmax * sigmay ) / 2.0_dp
                 else
-                     P = P + rho * exp( -xe**2/2*( ( sinPhi/sigmax )**2 + ( cosPhi/sigmay )**2 ) ) * exp( -rho**2/2D0*( ( sinTheta/sigmax )**2 + ( cosTheta/sigmay )**2 ) +  rho*xe*( ( sinTheta*sinPhi )/sigmax**2 + ( cosTheta*cosPhi )/sigmay**2 ) )   / ( 2D0 * PI * sigmax * sigmay )
+                     P = P + rho * exp( -xe**2/2*( ( sinPhi/sigmax )**2 + ( cosPhi/sigmay )**2 ) ) * exp( -rho**2/2.0_dp*( ( sinTheta/sigmax )**2 + ( cosTheta/sigmay )**2 ) +  rho*xe*( ( sinTheta*sinPhi )/sigmax**2 + ( cosTheta*cosPhi )/sigmay**2 ) )   / ( 2.0_dp * PI * sigmax * sigmay )
                 end if
                 rho = rho + dR
             end do
